@@ -1,5 +1,7 @@
 Crafty.init(1200,800, document.getElementById('game'));
 
+var background = Crafty.background('white');
+
 var floor = Crafty.e('Floor, 2D, Canvas, Color')
   .attr({x: 0, y: 250, w: 1000, h: 10})
   .color('black');
@@ -71,6 +73,13 @@ var enemy = Crafty.e('2D, Canvas, Color, Gravity')
     // Move to the right by 10 pixels per second
     this.x = this.x + 50 * (eventData.dt / 1000);
   });
+
+
+
+
+
+
+
 
   
   function setCookie(cname,cvalue,exdays) {
