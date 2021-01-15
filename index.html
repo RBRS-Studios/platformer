@@ -2,16 +2,19 @@
   <head>
     <style>
       body {
-        align-content: center;
-      }
-
-      .game {
-        margin: 0 auto;
+        background-color: grey;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
       }
     </style>
   </head>
   <body onload="checkCookie()">
-    <div id="game"></div>
+    <div style="margin-left:330px"id="game"></div>
+    <div class="info">
+      <h1>Traps! Sandbox</h1>
+      <h2>Traps sandbox is a sandbox mode for traps! Traps is a new platformer (currently in development)</h2>
+      <img src="logo1.png">
+    </div>
     <script type="text/javascript" src="https://rawgithub.com/craftyjs/Crafty/release/dist/crafty-min.js"></script>
     <script src="game.js"></script>
     <script type="text/javascript" src="https://cookieconsent.popupsmart.com/src/js/popper.js"></script><script> window.start.init({Palette:"palette6",Mode:"banner top",Theme:"classic",Message:"Cookies are used to save game data, otherwise make the experience better!",LinkText:"Learn More",Time:"5",})</script>
