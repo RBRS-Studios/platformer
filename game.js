@@ -74,6 +74,45 @@ var enemy = Crafty.e('2D, Canvas, Color, Gravity')
     this.x = this.x + 50 * (eventData.dt / 1000);
   });
 
+  var options = {
+    maxParticles: 150,
+    size: 18,
+    sizeRandom: 4,
+    speed: 1,
+    speedRandom: 1.2,
+    // Lifespan in frames
+    lifeSpan: 29,
+    lifeSpanRandom: 7,
+    // Angle is calculated clockwise: 12pm is 0deg, 3pm is 90deg etc.
+    angle: 65,
+    angleRandom: 34,
+    startColour: [255, 131, 0, 1],
+    startColourRandom: [48, 50, 45, 0],
+    endColour: [245, 35, 0, 0],
+    endColourRandom: [60, 60, 60, 0],
+    // Only applies when fastMode is off, specifies how sharp the gradients are drawn
+    sharpness: 20,
+    sharpnessRandom: 10,
+    // Random spread from origin
+    spread: 10,
+    // How many frames should this last
+    duration: -1,
+    // Will draw squares instead of circle gradients
+    fastMode: false,
+    gravity: { x: 0, y: 0.1 },
+    // sensible values are 0-3
+    jitter: 0,
+    // Offset for the origin of the particles
+    originOffset: {x: 0, y: 0}
+  };
+  
+  var particles = Crafty.e("2D, Canvas, Particles")
+      .attr({ w: 10000, h: 10000 })
+      // debug entity's bounds while developing
+      // make sure particles fit into entity's bounds
+      .addComponent('WiredMBR')
+      // init particle animation
+      .particles(options);
 
 
 
