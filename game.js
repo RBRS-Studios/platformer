@@ -14,26 +14,20 @@ var floor = Crafty.e('Floor, 2D, Canvas, Color')
   .attr({x: 1000, y: 380, w: 300, h: 10})
   .color('black');
 
-var player = Crafty.e('2D, Canvas, Color, Twoway, Gravity')
-.attr({x: 45, y: 0, w: 50, h: 50 })
+var player = Crafty.e('2D, Canvas, Color, Twoway, Gravity, Collision, Player')
+.attr({x: 45, y: 0, w: 50, h: 50, health: 25 })
   .color('green')
   .twoway(400, 260)
-  .gravity('Floor');
-
-  var info = Crafty.e('2D, DOM, Text')
-  .attr({
-    x: 0,
-    y: 400
+  .gravity('Floor')
+  .onHit('Solid', function(hitDatas) { // on collision with bullets
+    for (var i = 0, l = hitDatas.length; i < l; ++i) { // for each bullet hit
+      hitDatas[i].obj.destroy(); // destroy the bullet
+      this.health = -25; // player looses health
+      if (this.health <= 0) // once player's health depletes // player dies
+        window.location.reload();
+    }
   });
 
-  info.textColor('red');
-
-  info.text('ThisIsAnEnemy');
-
-  info.textFont({
-    size: '20px',
-    weight: 'bold'
-  });
 
   var title = Crafty.e('2D, DOM, Text')
   .attr({
@@ -57,67 +51,21 @@ Crafty.one("CameraAnimationDone", function() {
 });
 Crafty.viewport.centerOn(player, 10);
 
-var ground = Crafty.e('2D, Canvas, Color')
-.attr({x: 0, y: 5000, w: 3000, h: 10})
+var ground = Crafty.e('2D, Canvas, Color, Solid')
+.attr({x: -5000, y: 5000, w: 10000, h: 5000})
+.setName('ground')
 .color('purple');
 
 var music = Crafty.audio.add("bgmusic", "gamemusic.mp3");
 
 var play = Crafty.audio.play("bgmusic", -1, 0.5);
 
-var enemy = Crafty.e('2D, Canvas, Color, Gravity')
-  .attr({x: 45, y: 300, w: 50, h: 50})
-  .color('red')
-  .gravity('Floor')
-  .bind("UpdateFrame", function(eventData) {
-    // Move to the right by 10 pixels per second
-    this.x = this.x + 50 * (eventData.dt / 1000);
-  });
-
-  var options = {
-    maxParticles: 150,
-    size: 18,
-    sizeRandom: 4,
-    speed: 1,
-    speedRandom: 1.2,
-    // Lifespan in frames
-    lifeSpan: 29,
-    lifeSpanRandom: 7,
-    // Angle is calculated clockwise: 12pm is 0deg, 3pm is 90deg etc.
-    angle: 65,
-    angleRandom: 34,
-    startColour: [255, 131, 0, 1],
-    startColourRandom: [48, 50, 45, 0],
-    endColour: [245, 35, 0, 0],
-    endColourRandom: [60, 60, 60, 0],
-    // Only applies when fastMode is off, specifies how sharp the gradients are drawn
-    sharpness: 20,
-    sharpnessRandom: 10,
-    // Random spread from origin
-    spread: 10,
-    // How many frames should this last
-    duration: -1,
-    // Will draw squares instead of circle gradients
-    fastMode: false,
-    gravity: { x: 0, y: 0.1 },
-    // sensible values are 0-3
-    jitter: 0,
-    // Offset for the origin of the particles
-    originOffset: {x: 0, y: 0}
-  };
-  
-  var particles = Crafty.e("2D, Canvas, Particles")
-      .attr({ w: 10000, h: 10000 })
-      // debug entity's bounds while developing
-      // make sure particles fit into entity's bounds
-      .addComponent('WiredMBR')
-      // init particle animation
-      .particles(options);
 
 
 
-
-
+      var double = Crafty.e("2D, Canvas, Color")
+      .attr({x: 100, y: 450, w: 25, h: 25 })
+      .color('red');
 
 
   
@@ -155,11 +103,3 @@ var enemy = Crafty.e('2D, Canvas, Color, Gravity')
        }
     }
   }
-
-
-var load1 = Crafty.log('Character Loaded Successfully') //Character Loaded
-var load2 = Crafty.log('Other Entities Loaded Successfully') //Enemies and other entetites loaded
-var load3 = Crafty.log('Ground Loaded Successfully') //Ground Textures Loaded
-var load4 = Crafty.log('Game Successfully loaded') //Tells user game successfully loaded
-var load5 = Crafty.error('Premium not detected.') //Tells player this is not a premium version
-//If at anytime none of these show up, please refresh or restart your browser
